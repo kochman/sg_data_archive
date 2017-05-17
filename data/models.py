@@ -23,6 +23,16 @@ class Meeting(models.Model):
         return f'{self.session} meeting ({self.date})'
 
 
+class Membership(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    person = models.ForeignKey('Person', related_name='memberships')
+    session = models.ForeignKey('Session', related_name='memberships')
+    position = models.CharField(max_length=100)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+
+
 class Motion(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -46,7 +56,10 @@ class Person(models.Model):
     modified = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=60)
-    preferred_name = models.CharField(max_length=60)
+    preferred_name = models.CharField(max_length=60, blank=True)
+    sessions = models.ManyToManyField('Session', through=Membership)
+    profile = models.TextField(blank=True)
+    photo = models.ImageField(blank=True, upload_to='people_photos')
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

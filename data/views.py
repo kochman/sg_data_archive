@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from data.models import Body, Meeting, Motion, Person, Session
-from data.serializers import BodySerializer, MeetingSerializer, MotionSerializer, PersonSerializer, SessionSerializer
+from data.models import Body, Meeting, Membership, Motion, Person, Session
+from data.serializers import BodySerializer, MeetingSerializer, MembershipSerializer, MotionSerializer, PersonSerializer, SessionSerializer
 
 
 class BodyViewSet(viewsets.ModelViewSet):
@@ -13,6 +13,11 @@ class BodyViewSet(viewsets.ModelViewSet):
 class MeetingViewSet(viewsets.ModelViewSet):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
+
+
+class MembershipViewSet(viewsets.ModelViewSet):
+    queryset = Membership.objects.all()
+    serializer_class = MembershipSerializer
 
 
 class MotionViewSet(viewsets.ModelViewSet):
